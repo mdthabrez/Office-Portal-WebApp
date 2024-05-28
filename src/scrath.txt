@@ -1,0 +1,247 @@
+<Container fluid className="loginPage">
+      <Row className="h-100">
+        <Col xs={3} className="py-4 primary-color"></Col>
+        <Col xs={9} className="d-flex align-items-center justify-content-center">
+          <div>
+          <h1 className="pb-3 mb-4 border-bottom pl-2 pr-2" style={{borderBottomWidth: '10px'}}>
+            <span style={{marginLeft: '45px'}}>Office</span> <span >Web Portal</span>
+          </h1>
+
+            <Form style={{ minWidth: '500px' }}>
+              
+              <FormGroup>
+                <FormLabel htmlFor="username">Username</FormLabel>
+                <FormControl type="text" id="username" placeholder="Enter your username" />
+              </FormGroup>
+              <FormGroup>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <FormControl type="password" id="password" placeholder="Enter your password" />
+              </FormGroup>
+              <FormGroup style={{ textAlign: 'center' }}>
+                <Row>
+                  <Col xs={6}>
+                    <FormGroup>
+                      {/* <Captcha
+                        onChange={(status) => setCaptchaSuccess(status)}
+                      /> */}
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Button disabled={!captchaSuccess} variant="primary" type="submit" className="btn-login">
+                  Login
+                </Button>
+              </FormGroup>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+    </Container>
+
+    app.post("/", (req, res) => {
+  try {
+    console.log("post working")
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+  
+});
+
+const test = async(req,res) =>{
+  const admin = {
+    admin_id: req.body.admin_id,
+    admin_email: req.body.admin_email,
+    admin_pwd: req.body.admin_pwd
+  };
+
+    await Admin.Admin.create(admin);
+
+    return res.status(200).send({message:"test working "});
+
+}
+
+
+app.post("/createadmin2",  test);
+
+exports.Login = async (req, res) => {
+    const  email = req.body.user_email;
+    const password = req.body.password;
+    console.log(req.body);
+    try {
+        
+      const user = await Users.findOne({ where: { user_email:email } });
+      console.log(user);
+      if (!user) {
+        throw new Error('Invalid login credentials');
+      }
+      console.log(user.password);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        throw new Error('Invalid login credentials password');
+      }
+      const token = jwt.sign({ userId: user.id }, 'your_secret_key');
+      res.json({ user, token });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+
+// module.exports = app => {
+//     const signup = require("../controllers/");
+//     const login = require("../controllers/auth/login.controller");
+
+//     var router = require("express").Router();
+  
+//     // Create a new Tutorial
+//     router.post("/create-user", users.create);
+
+//     router.post("/login", login.Login);
+
+//     app.use('/', router);
+
+// };
+
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-6 text-center mb-5">
+            <h2 className="heading-section">Dist Login</h2>
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-md-12 col-lg-10">
+            <div className="wrap d-md-flex">
+              {/* <div className="img" style={{ backgroundImage: "url(./logo192.png)" }}>
+              </div> */}
+              <div className="login-wrap p-4 p-md-5">
+                <div className="d-flex">
+                  <div className="w-100">
+                    <h3 className="mb-4">Office web portal</h3>
+                  </div>
+                </div>
+                <Form onSubmit={handleLogin} ref={form}>
+                  <div className="form-group mb-3">
+                    <label className="label" htmlFor="name">Username</label>
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="username"
+                      value={username}
+                      onChange={onChangeUsername}
+                      validations={[required]}
+                    />
+                  </div>
+
+                  <div className="form-group mb-3">
+                    <label className="label" htmlFor="password">Password</label>
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={password}
+                      onChange={onChangePassword}
+                      validations={[required]}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <button
+                      disabled={loading}
+                      type="submit"
+                      className="form-control btn btn-primary rounded submit px-3"
+                    >
+                      Log In
+                    </button>
+                  </div>
+                  
+                  {message && (
+                    <div className="form-group">
+                      <div className="alert alert-danger" role="alert">
+                        {message}
+                      </div>
+                    </div>
+                  )}
+
+                  <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                </Form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      const db = require("./models");
+const Role = db.role;
+
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+ 
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+ 
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+}
+
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+ 
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+ 
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+
+  desig.create({
+    d_id:1,
+    d_name:"Superintendent"
+  })
+}
+
+
+try {
+  Bonafide.create({
+    student_name: studentName,
+    student_regis: studentRegis,
+    student_dept: studentDept,
+    student_branch: studentBranch,
+    student_year: studentYear,
+    date_of_issue: dateOfIssue,
+    purpose :purpose,
+    pdf_data: pdf_data,
+    pdf_name: pdf_name,
+  })
+} catch (error) {
+  console.error('Error:', error);
+  res.status(500).json({ message: 'Internal server error' });
+}
+     
+  // Send the PDF as a response
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', 'attachment; filename=output.pdf');
+  res.send(pdfBuffer);
+
+}
+ const response = BonafideService.addBonafide(JSON.stringify(formData));
+      console.log("response",response);
+        let res = "";
+      response.then((result) => {
+        // Access the result of the fulfilled promise
+        res=result;
+        console.log(result);
+      });
+
+      
